@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Plus, RefreshCw } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Priority, Status } from './TaskCard';
 
 interface Props {
@@ -11,13 +11,12 @@ interface Props {
 }
 
 const NewTaskModal: React.FC<Props> = ({ open, onClose, onCreate }) => {
+  // 1. ALL hooks at the top
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<Priority>('MEDIUM');
   const [submitting, setSubmitting] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
-
-  if (!open) return null;
 
   useEffect(() => {
     if (open) {
@@ -27,12 +26,18 @@ const NewTaskModal: React.FC<Props> = ({ open, onClose, onCreate }) => {
   }, [open]);
 
   useEffect(() => {
+    if (!open) return;
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
+
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  }, [open, onClose]);
+
+  // 2. Conditional check AFTER hooks
+  if (!open) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
