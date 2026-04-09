@@ -1,4 +1,4 @@
-# 🎯 NeuralTask | Modern Task Manager
+# 🎯 TaskFlow | Modern Task Manager
 
 A production-ready, full-stack task management application featuring a sleek glassmorphism UI, optimistic updates, type-safe APIs, and one-click cloud deployment.
 
