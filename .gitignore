@@ -1,0 +1,27 @@
+@'
+# Dependencies
+node_modules/
+*.log
+
+# Environment files
+.env
+.env.local
+*.env
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+!docker-compose.yml
+
+# IDE
+.vscode/
+.idea/
+'@ | Out-File -FilePath ".gitignore" -Encoding UTF8
