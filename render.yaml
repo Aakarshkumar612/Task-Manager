@@ -1,4 +1,5 @@
 ﻿services:
+  # Backend Web Service
   - type: web
     name: task-manager-api
     runtime: node
@@ -19,26 +20,23 @@
     healthCheckPath: /api/health
     autoDeploy: true
 
-  - type: static
+  # Frontend Web Service (Changed from 'static' to 'web')
+  - type: web
     name: task-manager-ui
+    runtime: node
     plan: free
     region: oregon
     rootDir: frontend
     buildCommand: npm ci && npm run build
-    publishDir: dist
+    startCommand: npx serve -s dist -l $PORT
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: VITE_API_BASE_URL
         fromService:
           type: web
           name: task-manager-api
           property: host
-    routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://task-manager-api.onrender.com/api/*
-      - type: rewrite
-        source: /*
-        destination: /index.html
     autoDeploy: true
 
 databases:
